@@ -1,0 +1,34 @@
+<!-- templates/edit_question.html -->
+{% extends 'base.html' %}
+{% block title %}Edit Question{% endblock %}
+{% block content %}
+    <h2>Edit Question</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="question_statement" class="form-label">Question</label>
+            <input type="text" class="form-control" id="question_statement" name="question_statement" value="{{ question.question_statement }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="option1" class="form-label">Option 1</label>
+            <input type="text" class="form-control" id="option1" name="option1" value="{{ question.option1 }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="option2" class="form-label">Option 2</label>
+            <input type="text" class="form-control" id="option2" name="option2" value="{{ question.option2 }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="option3" class="form-label">Option 3</label>
+            <input type="text" class="form-control" id="option3" name="option3" value="{{ question.option3 }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="option4" class="form-label">Option 4</label>
+            <input type="text" class="form-control" id="option4" name="option4" value="{{ question.option4 }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="correct_option" class="form-label">Correct Option (1-4)</label>
+            <input type="number" class="form-control" id="correct_option" name="correct_option" value="{{ question.correct_option }}" min="1" max="4" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Question</button>
+        <a href="{{ url_for('admin.admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

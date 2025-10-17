@@ -1,0 +1,224 @@
+/* static/css/style.css */
+:root {
+    --light-beige: #F1EFEC;
+    --warm-beige: #D4C9BE;
+    --navy-blue: #123458;
+    --dark-gray: #030303;
+}
+
+body {
+    background-color: var(--light-beige);
+    color: var(--dark-gray);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* Card Styling */
+.card {
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background-color: var(--navy-blue);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+    padding: 15px 20px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Table Styling */
+.table {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: var(--navy-blue);
+    color: white;
+    border: none;
+    padding: 12px 15px;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid var(--warm-beige);
+}
+
+.table tbody tr:hover {
+    background-color: var(--light-beige);
+}
+
+/* Form Styling */
+.form-control {
+    border: 1px solid var(--warm-beige);
+    border-radius: 5px;
+    padding: 8px 12px;
+    background-color: white;
+}
+
+.form-control:focus {
+    border-color: var(--navy-blue);
+    box-shadow: 0 0 0 0.2rem rgba(18, 52, 88, 0.25);
+}
+
+.form-label {
+    color: var(--navy-blue);
+    font-weight: 500;
+}
+
+/* Button Styling */
+.btn-primary {
+    background-color: var(--navy-blue);
+    border-color: var(--navy-blue);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #1a4a7a;
+    border-color: #1a4a7a;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    border-color: #ffc107;
+    color: var(--dark-gray);
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+/* Alert Styling */
+.alert {
+    border: none;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+
+.alert-info {
+    background-color: var(--navy-blue);
+    color: white;
+}
+
+/* Search Bar Styling */
+.input-group {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.input-group .form-control {
+    border: none;
+    padding: 12px 15px;
+}
+
+.input-group .form-select {
+    border: none;
+    background-color: var(--warm-beige);
+    color: var(--dark-gray);
+    padding: 12px 15px;
+}
+
+.input-group .btn {
+    border: none;
+    padding: 12px 20px;
+}
+
+/* Navigation Styling */
+.navbar {
+    background-color: var(--navy-blue);
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-weight: bold;
+}
+
+.nav-link {
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--warm-beige) !important;
+}
+
+/* Chart Container Styling */
+.chart-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* List Styling */
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--warm-beige);
+}
+
+ul li:last-child {
+    border-bottom: none;
+}
+
+/* Heading Styling */
+h2, h3, h4 {
+    color: var(--navy-blue);
+    margin-bottom: 20px;
+}
+
+/* Image Styling */
+.img-fluid {
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dashboard Title Styling */
+.dashboard-title {
+    color: white !important;
+    font-size: 1.75rem;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.text-white {
+    color: white !important;
+} 

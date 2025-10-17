@@ -1,0 +1,13 @@
+<!-- templates/results.html -->
+{% extends "base.html" %}
+{% block content %}
+    <h2>Quiz Results</h2>
+    <p>Subject: {{ score.quiz.chapter.subject.name }}</p>
+    <p>Chapter: {{ score.quiz.chapter.name }}</p>
+    <p>Number of Questions: {{ score.quiz.questions | length }}</p>
+    <p>Scheduled Date: {{ score.quiz.date_of_quiz }}</p>
+    <p>Duration (HH:MM): {{ score.quiz.time_duration }}</p>
+    <p>Score: {{ score.total_scored }} / {{ score.quiz.questions | length }}</p>
+    <p>Timestamp: {{ score.time_stamp_of_attempt }}</p>
+    <a href="{{ url_for('user.user_dashboard') }}" class="btn btn-primary">Close</a>
+{% endblock %}

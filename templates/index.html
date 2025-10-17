@@ -1,0 +1,9 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+{% block content %}
+    <h1>Welcome to Quiz Master</h1>
+    <p>An exam preparation platform for multiple courses.</p>
+    {% if not session.user_id %}
+        <p>Please <a href="{{ url_for('auth.login') }}">log in</a> or <a href="{{ url_for('auth.register') }}">register</a> to continue.</p>
+    {% endif %}
+{% endblock %}

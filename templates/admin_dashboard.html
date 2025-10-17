@@ -1,0 +1,378 @@
+<!-- templates/admin_dashboard.html -->
+{% extends "base.html" %}
+{% block content %}
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0 dashboard-title text-white">Admin Dashboard</h2>
+            </div>
+            <div class="card-body">
+    <!-- Search Bar -->
+    <form method="GET" action="{{ url_for('admin.search') }}" class="mb-4">
+        <div class="input-group">
+                        <input type="text" class="form-control" name="query" placeholder="Search users/subjects/quizzes/chapters..." value="{{ search_query if search_query else '' }}">
+                        <select class="form-select" name="type" style="max-width: 150px;">
+                            <option value="all">All</option>
+                            <option value="users">Users</option>
+                            <option value="subjects">Subjects</option>
+                            <option value="quizzes">Quizzes</option>
+                            <option value="chapters">Chapters</option>
+                        </select>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+                {% if search_query %}
+                    <div class="alert alert-info">
+                        Showing results for "{{ search_query }}"
+                    </div>
+
+                    <!-- Search Results Section -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3 class="mb-0">Search Results</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Users Results -->
+                            {% if users %}
+                                <div class="mb-4">
+                                    <h4>Users</h4>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Email</th>
+                                                    <th>Full Name</th>
+                                                    <th>Qualification</th>
+                                                    <th>DOB</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for user in users %}
+                                                    <tr>
+                                                        <td>{{ user.id }}</td>
+                                                        <td>{{ user.email }}</td>
+                                                        <td>{{ user.full_name }}</td>
+                                                        <td>{{ user.qualification }}</td>
+                                                        <td>{{ user.dob }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <!-- Subjects Results -->
+                            {% if subjects %}
+                                <div class="mb-4">
+                                    <h4>Subjects</h4>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for subject in subjects %}
+                                                    <tr>
+                                                        <td>{{ subject.id }}</td>
+                                                        <td>{{ subject.name }}</td>
+                                                        <td>{{ subject.description }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <!-- Chapters Results -->
+                            {% if chapters %}
+                                <div class="mb-4">
+                                    <h4>Chapters</h4>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th>Description</th>
+                                                    <th>Subject</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for chapter in chapters %}
+                                                    <tr>
+                                                        <td>{{ chapter.id }}</td>
+                                                        <td>{{ chapter.name }}</td>
+                                                        <td>{{ chapter.description }}</td>
+                                                        <td>{{ chapter.subject.name }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endif %}
+
+                            <!-- Quizzes Results -->
+                            {% if quizzes %}
+                                <div class="mb-4">
+                                    <h4>Quizzes</h4>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Chapter</th>
+                                                    <th>Subject</th>
+                                                    <th>Date</th>
+                                                    <th>Duration</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for quiz in quizzes %}
+                                                    <tr>
+                                                        <td>{{ quiz.id }}</td>
+                                                        <td>{{ quiz.chapter.name }}</td>
+                                                        <td>{{ quiz.chapter.subject.name }}</td>
+                                                        <td>{{ quiz.date_of_quiz }}</td>
+                                                        <td>{{ quiz.time_duration }}</td>
+                                                        <td>{{ quiz.remarks }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% else %}
+                    <!-- Regular Dashboard Content -->
+                    <div class="row">
+                        <!-- Add Subject Form -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="mb-0 dashboard-title text-white">New Subject</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="{{ url_for('admin.add_subject') }}">
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add Quiz Form -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="mb-0 dashboard-title text-white">New Quiz</h3>
+                                </div>
+                                <div class="card-body">
+                                    <form method="POST" action="{{ url_for('admin.add_quiz') }}">
+                                        <div class="mb-3">
+                                            <label for="chapter_id" class="form-label">Chapter</label>
+                                            <select class="form-control" id="chapter_id" name="chapter_id" required>
+                                                {% for chapter in chapters %}
+                                                    <option value="{{ chapter.id }}">{{ chapter.name }} (Subject: {{ chapter.subject.name }})</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="date_of_quiz" class="form-label">Date</label>
+                                            <input type="date" class="form-control" id="date_of_quiz" name="date_of_quiz" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="time_duration" class="form-label">Duration (HH:MM)</label>
+                                            <input type="text" class="form-control" id="time_duration" name="time_duration" required pattern="\d{2}:\d{2}">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="remarks" class="form-label">Remarks</label>
+                                            <textarea class="form-control" id="remarks" name="remarks"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary Charts -->
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="mb-0 dashboard-title text-white">Subject-wise Top Scores</h4>
+                                </div>
+                                <div class="card-body">
+                                    {% if bar_chart_path %}
+                                        <img src="{{ url_for('static', filename='subject_scores_bar.png') }}" alt="Subject-wise Top Scores" class="img-fluid">
+                                    {% else %}
+                                        <p>No scores available to display.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="mb-0 dashboard-title text-white">Subject-wise User Attempts</h4>
+                                </div>
+                                <div class="card-body">
+                                    {% if pie_chart_path %}
+                                        <img src="{{ url_for('static', filename='subject_attempts_pie.png') }}" alt="Subject-wise User Attempts" class="img-fluid">
+                                    {% else %}
+                                        <p>No attempts available to display.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+    <!-- Subjects List -->
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h3 class="mb-0 dashboard-title text-white">Subjects Management</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Chapters</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subject in subjects %}
+            <tr>
+                <td>{{ subject.name }}</td>
+                <td>{{ subject.description }}</td>
+                <td>
+                    <ul>
+                    {% for chapter in chapters if chapter.subject_id == subject.id %}
+                                                            <li>
+                                                                {{ chapter.name }} ({{ chapter.description }})
+                                                                <a href="{{ url_for('admin.delete_chapter', chapter_id=chapter.id) }}" class="btn btn-danger btn-sm ms-2">Delete</a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                                                    <form method="POST" action="{{ url_for('admin.add_chapter') }}" class="mt-2">
+                        <input type="hidden" name="subject_id" value="{{ subject.id }}">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" name="name" placeholder="Chapter Name" required>
+                                                            <input type="text" class="form-control" name="description" placeholder="Description">
+                                                            <button type="submit" class="btn btn-primary">Add Chapter</button>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                                                    <div class="btn-group">
+                    <a href="{{ url_for('admin.delete_subject', subject_id=subject.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editSubjectModal{{ subject.id }}">
+                                                            Edit
+                                                        </button>
+                                                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+                            </div>
+                        </div>
+                    </div>
+
+    <!-- Quizzes List -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="mb-0 dashboard-title text-white">Quizzes Management</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Chapter</th>
+                <th>Date</th>
+                <th>Duration</th>
+                <th>Questions</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for quiz in quizzes %}
+            <tr>
+                <td>{{ quiz.id }}</td>
+                <td>{{ quiz.chapter.name }}</td>
+                <td>{{ quiz.date_of_quiz }}</td>
+                <td>{{ quiz.time_duration }}</td>
+                <td>
+                    <ul>
+                    {% for question in quiz.questions %}
+                                                            <li>
+                                                                {{ question.question_statement }}
+                                                                <a href="{{ url_for('admin.delete_question', question_id=question.id) }}" class="btn btn-danger btn-sm ms-2">Delete</a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                                                    <form method="POST" action="{{ url_for('admin.add_question') }}" class="mt-2">
+                        <input type="hidden" name="quiz_id" value="{{ quiz.id }}">
+                        <div class="mb-3">
+                                                            <input type="text" class="form-control" name="question_statement" placeholder="Question Statement" required>
+                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <input type="text" class="form-control mb-2" name="option1" placeholder="Option 1" required>
+                                                                <input type="text" class="form-control mb-2" name="option2" placeholder="Option 2" required>
+                        </div>
+                                                            <div class="col-md-6">
+                                                                <input type="text" class="form-control mb-2" name="option3" placeholder="Option 3" required>
+                                                                <input type="text" class="form-control mb-2" name="option4" placeholder="Option 4" required>
+                        </div>
+                        </div>
+                                                        <div class="input-group mt-2">
+                                                            <input type="number" class="form-control" name="correct_option" placeholder="Correct Option (1-4)" min="1" max="4" required>
+                                                            <button type="submit" class="btn btn-primary">Add Question</button>
+                        </div>
+                    </form>
+                </td>
+                <td>
+                                                    <div class="btn-group">
+                    <a href="{{ url_for('admin.delete_quiz', quiz_id=quiz.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                                                        <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editQuizModal{{ quiz.id }}">
+                                                            Edit
+                                                        </button>
+                                                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+        </div>
+        </div>
+        </div>
+            {% endif %}
+        </div>
+        </div>
+    </div>
+{% endblock %}

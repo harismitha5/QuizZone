@@ -1,0 +1,22 @@
+<!-- templates/edit_quiz.html -->
+{% extends 'base.html' %}
+{% block title %}Edit Quiz{% endblock %}
+{% block content %}
+    <h2>Edit Quiz</h2>
+    <form method="POST">
+        <div class="mb-3">
+            <label for="date_of_quiz" class="form-label">Date of Quiz</label>
+            <input type="date" class="form-control" id="date_of_quiz" name="date_of_quiz" value="{{ quiz.date_of_quiz }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="time_duration" class="form-label">Time Duration (HH:MM)</label>
+            <input type="text" class="form-control" id="time_duration" name="time_duration" value="{{ quiz.time_duration }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="remarks" class="form-label">Remarks</label>
+            <textarea class="form-control" id="remarks" name="remarks">{{ quiz.remarks }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Quiz</button>
+        <a href="{{ url_for('admin.admin_dashboard') }}" class="btn btn-secondary">Cancel</a>
+    </form>
+{% endblock %}

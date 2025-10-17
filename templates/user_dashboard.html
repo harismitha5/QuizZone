@@ -1,0 +1,66 @@
+<!-- templates/user_dashboard.html -->
+{% extends "base.html" %}
+{% block content %}
+    <h2>User Dashboard</h2>
+    <p>Welcome User!</p>
+
+    <!-- Performance Chart -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Your Performance Overview</h3>
+        </div>
+        <div class="card-body">
+            {% if chart_path %}
+                <img src="{{ url_for('static', filename=chart_path) }}" alt="Performance Chart" class="img-fluid">
+            {% else %}
+                <p>No performance data available yet. Take some quizzes to see your progress!</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Subjects and Quizzes -->
+    <h3>Upcoming Quizzes</h3>
+    {% for subject in subjects %}
+        <h4>{{ subject.name }}</h4>
+        {% for chapter in subject.chapters %}
+            <h5>{{ chapter.name }}</h5>
+            <ul>
+            {% for quiz in chapter.quizzes %}
+                <li>
+                    Quiz {{ quiz.id }} (Date: {{ quiz.date_of_quiz }}, Duration: {{ quiz.time_duration }})
+                    <a href="{{ url_for('user.take_quiz', quiz_id=quiz.id) }}" class="btn btn-primary btn-sm">Start the Quiz</a>
+                </li>
+            {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endfor %}
+
+    
+    <h3>Quiz Scores</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Quiz ID</th>
+                <th>Chapter</th>
+                <th>Subject</th>
+                <th>Score</th>
+                <th>Timestamp</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for score in user_scores %}
+            <tr>
+                <td>{{ score.quiz_id }}</td>
+                <td>{{ score.quiz.chapter.name }}</td>
+                <td>{{ score.quiz.chapter.subject.name }}</td>
+                <td>{{ score.total_scored }}</td>
+                <td>{{ score.time_stamp_of_attempt }}</td>
+                <td>
+                    <a href="{{ url_for('user.quiz_results', score_id=score.id) }}" class="btn btn-info btn-sm">View the Quiz</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,77 @@
+<!-- templates/search_results.html -->
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+    <h2>Search Results for "{{ query }}"</h2>
+    <a href="{{ url_for('admin.admin_dashboard') }}" class="btn btn-primary mb-3">Back to Dashboard</a>
+    
+    {% if search_type == 'users' %}
+        <h3>Users</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Full Name</th>
+                    <th>Qualification</th>
+                    <th>DOB</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in results %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.full_name }}</td>
+                        <td>{{ user.qualification }}</td>
+                        <td>{{ user.dob }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif search_type == 'subjects' %}
+        <h3>Subjects</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subject in results %}
+                    <tr>
+                        <td>{{ subject.id }}</td>
+                        <td>{{ subject.name }}</td>
+                        <td>{{ subject.description }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elif search_type == 'quizzes' %}
+        <h3>Quizzes</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Chapter ID</th>
+                    <th>Date</th>
+                    <th>Duration</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in results %}
+                    <tr>
+                        <td>{{ quiz.id }}</td>
+                        <td>{{ quiz.chapter_id }}</td>
+                        <td>{{ quiz.date_of_quiz }}</td>
+                        <td>{{ quiz.time_duration }}</td>
+                        <td>{{ quiz.remarks }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}
